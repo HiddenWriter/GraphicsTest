@@ -1,6 +1,7 @@
 #include <iostream>
 
-int main (void) {
-    std::cout << "\n\t Test Message . \n";
+int main(void) {
+    std::cout << "\t\n test messages. \n";
+
     return 0;
 }
