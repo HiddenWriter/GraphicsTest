@@ -1,51 +1,65 @@
 #include <iostream>
 
-char** BoxInit(int _n) {
-    char** box = new char*[_n];
-    for(int i = 0; i < _n; i++) {
-        box[i] = new char[_n];
+int GenBox(char**& _box, int _num) {
+    _box = new char*[_num];
+    for(int i = 0; i < (_num * 2) - 1; i++) {
+        _box[i] = new char[(_num * 2) - 1];
     }
-    for (int i = 0; i < _n; i++) {
-        for (int j = 0; j < _n; j++) {
-            box[i][j] = ' ';
+
+    for(int i = 0; i < _num; i++) {
+        for(int j = 0; j < (_num * 2) - 1; j++) {
+            _box[i][j] = ' ';
         }
     }
-    return box;
+    return 1;
 }
 
-void GenStars(char** _a, int _n, int _x, int _y) {
-    if(_n < 3) {
-        _a[_x][_y] = '*';
-        return;
+int FreeMem(char**& _box, int _num) {
+    for (int i = 0; i < (2 * _num) - 1; i++) {
+        _box = nullptr;
+        delete[] _box[i];
+
+    }
+    _box = nullptr;
+    delete[] _box;
+    return 1;
+}
+
+int GenStar(char**& _box, int _num, int _x, int _y) {
+    if (_num == 3 ) {
+        _box[_x][_y] = '*';
+        _box[_x + 1][_y + 1] = '*';
+        _box[_x + 1][_y - 1] = '*';
+        for(int i = -2; i < 3; i++) {
+            _box[_x + 2][_y + i] = '*';
+        }
+        return 1;
     }
     else {
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if(i == 1 && j == 1);
-                else {
-                    GenStars(_a, _n/3, _x + i * (_n/3), _y + j * (_n /3));
-                }
-            }
-        }
-        return;
+        GenStar(_box, _num / 2, _x, _y);
+        GenStar(_box, _num / 2, _x + (_num / 2), _y - (_num / 2));
+        GenStar(_box, _num / 2, _x + (_num / 2), _y + (_num / 2));
+        return 1;
     }
 }
 
-void PrintStars(char** _a, int _n) {
-    for(int i = 0; i < _n; i++) {
-        for(int j = 0; j < _n; j++) {
-            std::cout << _a[i][j];
+int PrintStar(char** _box, int _num) {
+    for (int i = 0; i < _num; i++) {
+        for (int j = 0; j < (_num * 2) - 1; j++) {
+            std::cout << _box[i][j];
         }
         std::cout << '\n';
     }
-    return;   
-}
+    return 1;
+} 
 
 int main(void) {
-    int num =-1;
+    int num = -1;
     std::cin >> num;
-    char** Box = BoxInit(num);
-    GenStars(Box, num, 0, 0);
-    PrintStars(Box, num);
+    char** box = nullptr;
+    GenBox(box, num);
+    GenStar(box, num, 0, ((2 * num) - 1) / 2);
+    PrintStar(box, num);
+    FreeMem(box, num);
     return 0;
 }
