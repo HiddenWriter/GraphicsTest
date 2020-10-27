@@ -1,28 +1,33 @@
 #include "pch.h"
 
-int CALLBACK WinMain (
-	HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine,
-	int nCmdShow
-) 
+tagMSG msg = { 0 };
+BOOL gResult = FALSE;
+
+int WINAPI WinMain
+(
+	HINSTANCE _hIns,
+	HINSTANCE _prevIns,
+	LPSTR _lpCmdLine,
+	int _nShowCmd
+)
 {
-	MainWindow wnd(800, 300, "WindowTest");
-
-	MSG msg;
-	BOOL gResult = FALSE;
-	while ((gResult = GetMessage(&msg, nullptr, 0, 0) > 0))
+	
+	try
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		Application{ _lpCmdLine }.Go();
 	}
-
-	if (gResult == -1)
+	catch (const MyException & e)
 	{
-		return -1;
+		MessageBox(nullptr, e.What(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
 	}
-	else
+	catch (const std::exception e)
 	{
-		return msg.wParam;
+		MessageBox(nullptr, e.what(), "STANDARD EXCEPTION", MB_OK | MB_ICONEXCLAMATION);
 	}
+	catch (...)
+	{
+		MessageBox(nullptr, "NO DETAILS AVAILABLE", "UNKNOWN EXCEPTION", MB_OK | MB_ICONEXCLAMATION);
+	}
+	
+	return -1;
 }

@@ -1,50 +1,30 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define SCREEN_WIDTH 600				//< Window Screen width
+#define SECREEN_HEIGHT 800				//< Window Screen height
 
-#define _WIN32_WINT 0x0601
-#include <sdkddkver.h>
-
-#define WIN32_LEAN_AND_MEAN
-#define NOGDICAPMASKS
-#define NOSYSMETRICS
-#define NOMENUS
-#define NOICONS
-#define NOSYSCOMMANDS
-#define NORASTEROPS
-#define OEMERSOURCE
-#define NOATOM
-#define NOCLIPBOARD
-#define NOCOLOR
-#define NOCTLMGR
-#define NODRAWTEXT
-#define NOKERNEL
-#define NONLS
-#define NOMEMMGR
-#define NOMETAFILE
+#define  _WIN32_WINNT 0x0601
 #define NOMINMAX
-#define NOOPENFILE
-#define NOSCROLL
-#define NOSERVICE
-#define NOSOUND
-#define NOTEXTMETRIC
-#define NOWH
-#define NOCOMM
-#define NOKANJI
-#define NOHELP
-#define NOPROFILTER
-#define NODEFERWINDOWPOS
-#define NOMCX
-#define NORPC
-#define NOPROXYSTUB
-#define NOIMAGE
-#define NOTAPE
 
-#define STRICT
-#include <CoreWindow.h>
 #include <Windows.h>
-#include <iostream>
+#include <iostream>>
+#include <string>
+#include <exception>
+#include <queue>
+#include <bitset>
+#include <sstream>
+#include <optional>
+#include <chrono>
 
-#include "MainWindow.h"
+#include "Timer.h"
+#include "MyException.h"
+#include "MyMouse.h"
+#include "MyKeyboard.h"
+#include "MyWindow.h"
+#include "TestCode.h"
+#include "Application.h"
+#include "resource.h"
 
-#endif PCH_H
+#define HWND_LAST_EXCEPT() MyWindow::Exception(__LINE__, __FILE__, GetLastError())
+#endif // !PCH_H
