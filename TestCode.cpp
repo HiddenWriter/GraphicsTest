@@ -38,3 +38,10 @@ void TestCode::TestTimer(MyWindow* _hwnd)
 {
 	return;
 }
+
+void TestCode::TestRenderColour(MyWindow* _hwnd, float _r, float _g, float _b) noexcept
+{
+	const float colour = sin(_hwnd->mTimer.Peek()) / 2.0f + 0.5f;
+	_hwnd->GetGraphics().ClearBuffer(colour, colour, 0.0f);
+	return;
+}
